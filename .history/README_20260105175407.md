@@ -1,0 +1,250 @@
+# Carbon-Aware Cloud Job Scheduling (Simulation with Real Grid Data)
+
+Repository: https://github.com/Dhakshin2007/Carbon_Aware_Scheduler
+
+------------------------------------------------------------------------
+
+## 📌 Overview
+
+This project explores **carbon‑aware job scheduling**: the idea that
+some cloud compute workloads can be shifted into time windows where the
+electricity grid is cleaner (for example, when more renewable energy is
+available).
+
+Instead of only optimizing scheduling for **speed or system
+utilization**, this work evaluates what happens when we also consider
+**grid‑carbon intensity** as an optimization signal.
+
+This repository contains:
+
+-   A simulated workload of 1,000 compute jobs
+-   Real‑world UK grid‑carbon‑intensity data
+-   Multiple scheduling strategies
+-   A simulation engine
+-   Carbon‑emission calculations and comparison metrics
+
+This is a research‑style prototype intended for learning and
+experimentation.
+
+------------------------------------------------------------------------
+
+## 🎯 Goal
+
+To answer the question:
+
+> **Does carbon‑aware scheduling reduce total emissions compared to
+> standard approaches like FIFO or EDF?**
+
+And if so:
+
+> **Under what conditions does it work best?**
+
+------------------------------------------------------------------------
+
+## 🧠 Key Concept (In Simple Terms)
+
+Electricity is not equally clean all the time.
+
+Sometimes: - renewable output is high → **cleaner energy** - fossil
+generation dominates → **dirtier energy**
+
+Traditional schedulers ignore this.
+
+### This project tests:
+
+✔ What happens if we delay flexible jobs into greener time windows while
+still meeting deadlines?
+
+------------------------------------------------------------------------
+
+## 📂 Project Structure
+
+    Carbon_Aware_Scheduler/
+    │
+    ├── data/
+    │   ├── carbon_scheduler_jobs_1000.csv        # Simulated workload
+    │   ├── gb_carbon_intensity.csv               # Real grid‑carbon data
+    │
+    ├── notebook/
+    │   ├── carbon_scheduler_simulation.ipynb     # Main simulation notebook
+    │
+    ├── README.md
+    └── requirements.txt
+
+------------------------------------------------------------------------
+
+## 🔧 Technology Stack
+
+-   Python
+-   Pandas
+-   NumPy
+-   Matplotlib
+-   Google Colab (recommended environment)
+
+------------------------------------------------------------------------
+
+## ⚙️ Installation & Setup
+
+### Option 1 --- Google Colab (Recommended)
+
+1.  Open Google Colab
+2.  Upload:
+    -   `carbon_scheduler_jobs_1000.csv`
+    -   `gb_carbon_intensity.csv`
+3.  Upload the notebook:
+    -   `carbon_scheduler_simulation.ipynb`
+4.  Run the cells in order
+
+No local installation needed.
+
+------------------------------------------------------------------------
+
+### Option 2 --- Local Setup (Optional)
+
+#### 1. Clone this repository
+
+    git clone https://github.com/Dhakshin2007/Carbon_Aware_Scheduler
+    cd Carbon_Aware_Scheduler
+
+#### 2. Create a virtual environment (optional but recommended)
+
+    python -m venv venv
+    source venv/bin/activate   # macOS/Linux
+    venv\Scripts\activate    # Windows
+
+#### 3. Install dependencies
+
+    pip install -r requirements.txt
+
+------------------------------------------------------------------------
+
+## 📊 Data Used
+
+### 1️⃣ Workload Dataset
+
+`carbon_scheduler_jobs_1000.csv`
+
+Each job has: - Job ID - Arrival time - Deadline - Duration (hours) -
+Priority
+
+This simulates real‑world compute workloads.
+
+### 2️⃣ Grid‑Carbon Dataset
+
+`gb_carbon_intensity.csv`
+
+Includes: - Timestamp - Grid‑carbon intensity (gCO₂/kWh)
+
+This reflects real electricity‑grid emissions.
+
+------------------------------------------------------------------------
+
+## 🏗 Scheduling Algorithms Implemented
+
+### ✔ FIFO (First‑In, First‑Out)
+
+Jobs run in the order they arrive.
+
+### ✔ EDF (Earliest Deadline First)
+
+Jobs with the closest deadlines run first.
+
+### ✔ Carbon‑Aware EDF (Prototype)
+
+Attempts to prioritize **low‑carbon windows** while still meeting
+deadlines.
+
+------------------------------------------------------------------------
+
+## 🧮 Emissions Model
+
+For each time slot:
+
+    carbon_emitted = energy_used × grid_carbon_intensity
+
+Assumption: - Running one job consumes constant energy per time unit
+
+This keeps the model clear and comparable.
+
+------------------------------------------------------------------------
+
+## 🧪 Simulation Method
+
+Time is divided into **30‑minute slots**.
+
+At each slot:
+
+1.  Jobs arriving are added to the queue
+2.  Scheduler picks one job
+3.  Remaining runtime decreases
+4.  Carbon emitted is recorded
+5.  Deadlines are tracked
+
+------------------------------------------------------------------------
+
+## 📈 Current Results & Finding
+
+In the first version of this work:
+
+-   FIFO
+-   EDF
+-   Carbon‑Aware EDF
+
+produced **similar total emissions** in simulation.
+
+### 🔍 Key Insight
+
+> **Carbon‑aware scheduling only reduces emissions when workloads have
+> enough flexibility to shift into greener time windows.**
+
+If deadlines are tight, everything still runs immediately.
+
+This is an **important real‑world conclusion**.
+
+------------------------------------------------------------------------
+
+## 🚀 Next Steps (Roadmap)
+
+Planned improvements:
+
+✅ Stronger carbon‑bias scheduling\
+✅ Model flexible vs critical workloads\
+✅ Multi‑region scheduling\
+✅ Forecast uncertainty\
+✅ Kubernetes‑style simulation
+
+------------------------------------------------------------------------
+
+## 🎓 Educational Value
+
+This project demonstrates:
+
+✔ workload modeling\
+✔ scheduling logic\
+✔ sustainability engineering concepts\
+✔ simulation design\
+✔ honest results reporting
+
+------------------------------------------------------------------------
+
+## 📜 License
+
+MIT License
+
+You may use and reference this work freely with attribution.
+
+------------------------------------------------------------------------
+
+## 🙌 Acknowledgements
+
+This project was developed with research learning support and AI
+assistance for structuring, documentation, and experimentation.
+
+------------------------------------------------------------------------
+
+## 🌍 Motivation
+
+Even **small improvements in workload scheduling** can reduce emissions
+at global data‑center scale.
+
+This work explores those possibilities.
